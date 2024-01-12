@@ -1,7 +1,7 @@
 {
     "app-id": "io.github.JakubMelka.Pdf4qt",
     "runtime": "org.kde.Sdk",
-    "runtime-version": "6.5",
+    "runtime-version": "6.6",
     "sdk": "org.kde.Sdk",
     "command": "Pdf4QtViewerProfi",
     "finish-args": [
@@ -21,7 +21,9 @@
             "config-opts": [
                 "-DCMAKE_BUILD_TYPE=Release",
                 "-DPDF4QT_INSTALL_QT_DEPENDENCIES=0",
-                "-DCMAKE_TOOLCHAIN_FILE=/run/build/pdf4qt/vcpkg/scripts/buildsystems/vcpkg.cmake"
+                "-DCMAKE_TOOLCHAIN_FILE=/run/build/pdf4qt/vcpkg/scripts/buildsystems/vcpkg.cmake",
+                "-DPDF4QT_INSTALL_TO_USR=OFF",
+                "-DVCPKG_OVERLAY_PORTS=/run/build/pdf4qt/vcpkg/overlays"
             ],
             "sources": [
                 {
@@ -33,8 +35,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/JakubMelka/PDF4QT.git",
-                    "tag": "flatpakv4",
-                    "commit": "6f3c2faba28ea088de8e44c99e653e1706fca2c8"
+                    "tag": "flatpakv7",
+                    "commit": "221587c751e0786738c04ee603fa4b419ab23b6b"
                 }
             ]
         }
