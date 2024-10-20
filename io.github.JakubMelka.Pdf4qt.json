@@ -35,8 +35,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/JakubMelka/PDF4QT.git",
-                    "tag": "flatpakv7",
-                    "commit": "221587c751e0786738c04ee603fa4b419ab23b6b"
+                    "tag": "v1.4.0.0",
+                    "commit": "3a1ffc0d237b9b74e447d01365cb653e823c7353"
                 }
             ]
         }
