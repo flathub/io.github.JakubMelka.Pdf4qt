@@ -1,6 +1,6 @@
 {
     "app-id": "io.github.JakubMelka.Pdf4qt",
-    "runtime": "org.kde.Sdk",
+    "runtime": "org.kde.Platform",
     "runtime-version": "6.9",
     "sdk": "org.kde.Sdk",
     "command": "Pdf4QtEditor",
