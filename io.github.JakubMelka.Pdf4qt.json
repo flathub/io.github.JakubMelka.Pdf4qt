@@ -18,6 +18,9 @@
         "PKG_CONFIG_PATH": "/app/lib64/pkgconfig:/app/lib/pkgconfig"
       }
     },
+    "environment": {
+      "FLATPAKAPPDIR": "/app"
+    },
     "modules": [
         {
             "name": "tbb",
@@ -126,7 +129,7 @@
                 {
                     "type": "git",
                     "url": "https://github.com/JakubMelka/PDF4QT.git",
-                    "commit": "f5d73eb38edab0d5afcbc7d986db3bc85c6ae0ea"
+                    "commit": "9d54d0e1abab9c1a6ffd2c9b8b5ee7ee1df35ac0"
                 }
             ]
         }
