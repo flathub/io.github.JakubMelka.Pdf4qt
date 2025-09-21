@@ -120,13 +120,14 @@
                 "-DPDF4QT_INSTALL_QT_DEPENDENCIES=OFF",
                 "-DPDF4QT_INSTALL_DEPENDENCIES=OFF",
                 "-DPDF4QT_INSTALL_TO_USR=OFF",
-                "-DCMAKE_VERBOSE_MAKEFILE=OFF"
+                "-DCMAKE_VERBOSE_MAKEFILE=OFF",
+                "-DPDF4QT_FLATPAK_BUILD=ON"
             ],
             "sources": [
                 {
                     "type": "git",
                     "url": "https://github.com/JakubMelka/PDF4QT.git",
-                    "commit": "f5d73eb38edab0d5afcbc7d986db3bc85c6ae0ea"
+                    "commit": "826dd3079b2bc3ee6131a5178b2f535c991d5951"
                 }
             ]
         }
