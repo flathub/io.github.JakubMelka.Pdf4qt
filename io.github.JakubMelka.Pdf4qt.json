@@ -18,9 +18,6 @@
         "PKG_CONFIG_PATH": "/app/lib64/pkgconfig:/app/lib/pkgconfig"
       }
     },
-    "environment": {
-      "FLATPAKAPPDIR": "/app"
-    },
     "modules": [
         {
             "name": "tbb",
@@ -118,6 +115,7 @@
             "name": "pdf4qt",
             "buildsystem": "cmake-ninja",
             "builddir": true,
+            "cflags-cpp": ["-DPDF4QT_FLATPAK_BUILD"],
             "config-opts": [
                 "-DCMAKE_BUILD_TYPE=Release",
                 "-DPDF4QT_INSTALL_QT_DEPENDENCIES=OFF",
@@ -129,7 +127,7 @@
                 {
                     "type": "git",
                     "url": "https://github.com/JakubMelka/PDF4QT.git",
-                    "commit": "9d54d0e1abab9c1a6ffd2c9b8b5ee7ee1df35ac0"
+                    "commit": "2df79c7356f720cf96b01e0ddd617c8ccd59e5e8"
                 }
             ]
         }
