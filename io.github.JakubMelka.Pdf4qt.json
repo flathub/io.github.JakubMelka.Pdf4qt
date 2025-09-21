@@ -115,7 +115,6 @@
             "name": "pdf4qt",
             "buildsystem": "cmake-ninja",
             "builddir": true,
-            "cflags-cpp": ["-DPDF4QT_FLATPAK_BUILD"],
             "config-opts": [
                 "-DCMAKE_BUILD_TYPE=Release",
                 "-DPDF4QT_INSTALL_QT_DEPENDENCIES=OFF",
