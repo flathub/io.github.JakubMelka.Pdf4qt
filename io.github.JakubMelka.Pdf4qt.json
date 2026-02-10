@@ -12,6 +12,13 @@
         "--filesystem=host"
     ],
     "cleanup": [
+        "/include",
+        "/lib/cmake",
+        "/lib/pkgconfig",
+        "/share/doc",
+        "/share/man",
+        "*.la",
+        "*.a"
     ],
     "build-options": {
       "env": {
