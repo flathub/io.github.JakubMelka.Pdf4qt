@@ -1,7 +1,7 @@
 {
     "app-id": "io.github.JakubMelka.Pdf4qt",
     "runtime": "org.kde.Platform",
-    "runtime-version": "6.9",
+    "runtime-version": "6.10",
     "sdk": "org.kde.Sdk",
     "command": "Pdf4QtEditor",
     "finish-args": [
@@ -12,6 +12,13 @@
         "--filesystem=host"
     ],
     "cleanup": [
+        "/include",
+        "/lib/cmake",
+        "/lib/pkgconfig",
+        "/share/doc",
+        "/share/man",
+        "*.la",
+        "*.a"
     ],
     "build-options": {
       "env": {
@@ -33,52 +40,6 @@
                     "type": "git",
                     "url": "https://github.com/uxlfoundation/oneTBB.git",
                     "commit": "d3b0a80d02501b2304de6afb940465f465482a6b"
-                }
-            ]
-        },
-        {
-            "name": "lcms2",
-            "buildsystem": "cmake-ninja",
-            "builddir": true,
-            "config-opts": [
-                "-DCMAKE_BUILD_TYPE=Release"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://github.com/JakubMelka/Little-CMS.git",
-                    "commit": "c70dfeb34f2bcdc64358b353de19e372503cf3fa"
-                }
-            ]
-        },
-        {
-            "name": "zlib",
-            "buildsystem": "cmake-ninja",
-            "config-opts": [
-                "-DCMAKE_BUILD_TYPE=Release"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://github.com/madler/zlib.git",
-                    "tag": "v1.3.1",
-                    "commit": "51b7f2abdade71cd9bb0e7a373ef2610ec6f9daf"
-                }
-            ]
-        },
-        {
-            "name": "openjpeg",
-            "buildsystem": "cmake-ninja",
-            "config-opts": [
-                "-DCMAKE_BUILD_TYPE=Release",
-                "-DBUILD_CODEC=OFF"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://github.com/uclouvain/openjpeg.git",
-                    "tag": "v2.5.2",
-                    "commit": "39e8c50a2f9bdcf36810ee3d41bcbf1cc78968ae"
                 }
             ]
         },
