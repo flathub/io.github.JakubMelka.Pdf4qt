@@ -306,7 +306,8 @@
                 "-DPDF4QT_INSTALL_DEPENDENCIES=OFF",
                 "-DPDF4QT_INSTALL_TO_USR=OFF",
                 "-DCMAKE_VERBOSE_MAKEFILE=OFF",
-                "-DPDF4QT_FLATPAK_BUILD=ON"
+                "-DPDF4QT_FLATPAK_BUILD=ON",
+                "-DPDF4QT_BUILD_TESTS=OFF"
             ],
             "build-commands": [
                 "ninja all",
