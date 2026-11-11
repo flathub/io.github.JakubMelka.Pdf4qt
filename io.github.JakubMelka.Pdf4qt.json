@@ -1,7 +1,7 @@
 {
     "app-id": "io.github.JakubMelka.Pdf4qt",
     "runtime": "org.kde.Platform",
-    "runtime-version": "6.10",
+    "runtime-version": "6.11",
     "sdk": "org.kde.Sdk",
     "command": "Pdf4QtEditor",
     "finish-args": [
@@ -9,7 +9,9 @@
         "--socket=wayland",
         "--device=dri",
         "--share=ipc",
-        "--filesystem=host"
+        "--share=network",
+        "--filesystem=host",
+        "--filesystem=xdg-run/speech-dispatcher"
     ],
     "cleanup": [
         "/include",
@@ -21,9 +23,9 @@
         "*.a"
     ],
     "build-options": {
-      "env": {
-        "PKG_CONFIG_PATH": "/app/lib64/pkgconfig:/app/lib/pkgconfig"
-      }
+        "env": {
+            "PKG_CONFIG_PATH": "/app/lib64/pkgconfig:/app/lib/pkgconfig"
+        }
     },
     "modules": [
         {
@@ -39,7 +41,83 @@
                 {
                     "type": "git",
                     "url": "https://github.com/uxlfoundation/oneTBB.git",
-                    "commit": "d3b0a80d02501b2304de6afb940465f465482a6b"
+                    "tag": "v2023.1.0",
+                    "commit": "3046c8b0c29df995980003ea24f4d78c80ec0c8d"
+                }
+            ]
+        },
+        {
+            "name": "lcms2",
+            "buildsystem": "meson",
+            "config-opts": [
+                "--buildtype=release",
+                "-Dtests=disabled",
+                "-Djpeg=disabled",
+                "-Dtiff=disabled"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/mm2/Little-CMS.git",
+                    "tag": "lcms2.19.1",
+                    "commit": "21c582a594fe5279f90c0b93437c398f93bf62b0"
+                }
+            ]
+        },
+        {
+            "name": "zlib",
+            "buildsystem": "cmake-ninja",
+            "config-opts": [
+                "-DCMAKE_BUILD_TYPE=Release",
+                "-DZLIB_BUILD_TESTING=OFF"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/madler/zlib.git",
+                    "tag": "v1.3.2",
+                    "commit": "da607da739fa6047df13e66a2af6b8bec7c2a498"
+                }
+            ]
+        },
+        {
+            "name": "openjpeg",
+            "buildsystem": "cmake-ninja",
+            "config-opts": [
+                "-DCMAKE_BUILD_TYPE=Release",
+                "-DBUILD_CODEC=OFF"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/uclouvain/openjpeg.git",
+                    "tag": "v2.5.4",
+                    "commit": "6c4a29b00211eb0430fa0e5e890f1ce5c80f409f"
+                }
+            ]
+        },
+        {
+            "name": "clipper2",
+            "buildsystem": "cmake-ninja",
+            "subdir": "CPP",
+            "config-opts": [
+                "-DCMAKE_BUILD_TYPE=Release",
+                "-DCLIPPER2_EXAMPLES=OFF",
+                "-DCLIPPER2_TESTS=OFF",
+                "-DCLIPPER2_UTILS=OFF"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/AngusJohnson/Clipper2.git",
+                    "tag": "Clipper2_2.0.1",
+                    "commit": "21ebba05db8894f0c7217ad35ea518080f324946"
+                },
+                {
+                    "type": "shell",
+                    "commands": [
+                        "sed -i 's/int ec;/int ec = 0;/' CPP/Clipper2Lib/src/clipper.triangulation.cpp"
+                    ]
                 }
             ]
         },
@@ -73,6 +151,149 @@
             ]
         },
         {
+            "name": "dotconf",
+            "buildsystem": "autotools",
+            "config-opts": [
+                "--disable-static"
+            ],
+            "cleanup": [
+                "*"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/williamh/dotconf.git",
+                    "tag": "v1.4.1",
+                    "commit": "7c3e0515c29efce45de6aae29befb2ab4396bd60"
+                },
+                {
+                    "type": "shell",
+                    "commands": [
+                        "autoreconf -fi"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "speech-dispatcher",
+            "buildsystem": "autotools",
+            "config-opts": [
+                "--disable-static",
+                "--disable-python",
+                "--disable-doc",
+                "--without-espeak",
+                "--without-espeak-ng",
+                "--without-flite",
+                "--without-ibmtts",
+                "--without-voxin",
+                "--without-ivona",
+                "--without-pico",
+                "--without-baratinoo",
+                "--without-kali",
+                "--without-libao",
+                "--without-pipewire",
+                "--without-alsa",
+                "--without-oss",
+                "--without-nas",
+                "--with-pulse",
+                "--with-systemdsystemunitdir=no",
+                "--with-systemduserunitdir=no"
+            ],
+            "cleanup": [
+                "/bin",
+                "/etc",
+                "/include",
+                "/libexec",
+                "/share",
+                "/lib/pkgconfig",
+                "/lib/speech-dispatcher",
+                "/lib/speech-dispatcher-modules",
+                "/lib/*.la",
+                "/lib/libspeechd.so",
+                "/lib/libspeechd_module.so*"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/brailcom/speechd/releases/download/0.12.1/speech-dispatcher-0.12.1.tar.gz",
+                    "sha256": "b14a5238d287d2dcce4dd42bbd66ca65fa228e7e683708267f7b34036f7ba4b4"
+                }
+            ]
+        },
+        {
+            "name": "qtspeech-speechd",
+            "buildsystem": "cmake-ninja",
+            "config-opts": [
+                "-DCMAKE_BUILD_TYPE=Release",
+                "-DFEATURE_speechd=ON",
+                "-DFEATURE_flite=OFF",
+                "-DQT_BUILD_TESTS=OFF",
+                "-DQT_BUILD_EXAMPLES=OFF"
+            ],
+            "cleanup": [
+                "/include",
+                "/lib/x86_64-linux-gnu",
+                "/lib/cmake",
+                "/lib/metatypes",
+                "/lib/modules",
+                "/lib/pkgconfig",
+                "/lib/qml",
+                "/lib/sbom",
+                "/lib/*.prl",
+                "/lib/libQt6TextToSpeech*",
+                "/lib/plugins/texttospeech/libqtexttospeech_mock.so",
+                "/mkspecs",
+                "/modules",
+                "/share",
+                "/sbom"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://download.qt.io/official_releases/qt/6.11/6.11.2/submodules/qtspeech-everywhere-src-6.11.2.tar.xz",
+                    "sha256": "9c1d05dc9d710049f20a67680fc6b4293c9b584a90f04f4cf6cc36e758c5cb98"
+                }
+            ]
+        },
+        {
+            "name": "leptonica",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "config-opts": [
+                "-DCMAKE_BUILD_TYPE=Release",
+                "-DBUILD_SHARED_LIBS=ON",
+                "-DBUILD_PROG=OFF",
+                "-DSW_BUILD=OFF"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/DanBloomberg/leptonica/archive/1.87.0.tar.gz",
+                    "sha256": "fa2b40c5caea96d1bb93a97486262aed8731b69ce25a84a6bf5d25323e33f631"
+                }
+            ]
+        },
+        {
+            "name": "tesseract",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "config-opts": [
+                "-DCMAKE_BUILD_TYPE=Release",
+                "-DBUILD_SHARED_LIBS=ON",
+                "-DBUILD_TRAINING_TOOLS=OFF",
+                "-DDISABLE_CURL=ON",
+                "-DDISABLE_ARCHIVE=ON",
+                "-DSW_BUILD=OFF"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/tesseract-ocr/tesseract/archive/5.5.2.tar.gz",
+                    "sha256": "6235ea0dae45ea137f59c09320406f5888383741924d98855bd2ce0d16b54f21"
+                }
+            ]
+        },
+        {
             "name": "pdf4qt",
             "buildsystem": "cmake-ninja",
             "builddir": true,
@@ -82,16 +303,21 @@
                 "-DPDF4QT_INSTALL_DEPENDENCIES=OFF",
                 "-DPDF4QT_INSTALL_TO_USR=OFF",
                 "-DCMAKE_VERBOSE_MAKEFILE=OFF",
-                "-DPDF4QT_FLATPAK_BUILD=ON"
+                "-DPDF4QT_FLATPAK_BUILD=ON",
+                "-DPDF4QT_BUILD_TESTS=OFF"
+            ],
+            "build-commands": [
+                "ninja all",
+                "ninja release_translations"
             ],
             "sources": [
                 {
                     "type": "git",
                     "url": "https://github.com/JakubMelka/PDF4QT.git",
-                    "commit": "c141ff9bb3766a022184b09c796f201629307d69"
+                    "tag": "v1.7.0.0",
+                    "commit": "3e50f636551907db3f018e99748fe7daa56ff497"
                 }
             ]
         }
     ]
 }
-
